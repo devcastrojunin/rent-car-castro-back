@@ -24,7 +24,7 @@ namespace src.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<UserModel>> GetUsers(int id)
+        public async Task<ActionResult<UserModel>> GetUsers(Guid id)
         {
             return await _userRepository.GetUserByIdAsync(id);
         }
