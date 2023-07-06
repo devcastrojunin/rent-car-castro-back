@@ -1,4 +1,5 @@
-﻿using RentCarCastro.Models;
+﻿using Microsoft.AspNetCore.Mvc;
+using RentCarCastro.Models;
 
 namespace RentCarCastro.Repositories.Interfaces
 {
@@ -7,5 +8,7 @@ namespace RentCarCastro.Repositories.Interfaces
         Task<List<UserModel>> GetAllUsersAsync();
         Task<UserModel> GetUserByIdAsync(Guid id);
         Task<UserModel> AddUsersAsync(UserModel user);
+        Task<UserModel> UpdateUserAsync(UserModel user);
+        Task<(bool, string)> DeleteUserAsync(UserModel user);
     }
 }

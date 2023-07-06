@@ -46,6 +46,7 @@ namespace RentCarCastro.Data
                     IsActive = false
                 }
             );
+
             base.OnModelCreating(modelBuilder);
         }
     }
