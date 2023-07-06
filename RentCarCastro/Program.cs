@@ -1,6 +1,16 @@
+
+using Microsoft.EntityFrameworkCore;
+using RentCarCastro.Data;
+using RentCarCastro.Repositories.Interfaces;
+using src.Repositories;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddDbContext<ApiDbContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("ApiContext")));
+
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
