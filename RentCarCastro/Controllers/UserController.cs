@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using RentCarCastro.Data;
 using RentCarCastro.Models;
 using RentCarCastro.Repositories.Interfaces;
-using RentCarCastro.Requests;
 
 namespace src.Controllers
 {
