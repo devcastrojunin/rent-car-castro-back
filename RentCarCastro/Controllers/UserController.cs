@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using RentCarCastro.Models;
 using RentCarCastro.Repositories.Interfaces;
 
@@ -15,6 +16,7 @@ namespace src.Controllers
             _userRepository = userRepository;
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<UserModel>>> GetUsers()
         {
@@ -29,7 +31,7 @@ namespace src.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<UserModel>> GetUserById([FromRoute] Guid id)
+        public async Task<ActionResult<UserModel>> GetUserById([FromRoute] int id)
         {
             var user = await _userRepository.GetUserByIdAsync(id);
             if (user == null)
@@ -69,7 +71,7 @@ namespace src.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteUser([FromRoute] Guid id)
+        public async Task<ActionResult> DeleteUser([FromRoute] int id)
         {
             var user = await _userRepository.GetUserByIdAsync(id);
 

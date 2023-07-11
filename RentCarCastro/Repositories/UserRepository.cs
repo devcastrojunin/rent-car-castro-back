@@ -14,7 +14,7 @@ namespace src.Repositories
         {
             _dbContext = dbContext;
         }
-        public async Task<UserModel> GetUserByIdAsync(Guid id)
+        public async Task<UserModel> GetUserByIdAsync(int id)
         {
             UserModel user = await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == id);
             return user;
