@@ -16,90 +16,47 @@ namespace src.Repositories
         }
         public async Task<UserModel> GetUserByIdAsync(Guid id)
         {
-            try
-            {
-                UserModel user = await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == id);
-
-                if (user == null) return null;
-
-                return user;
-            }
-            catch
-            {
-                return null;
-            }
-
-
+            UserModel user = await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == id);
+            return user;
         }
 
         public async Task<List<UserModel>> GetAllUsersAsync()
         {
-            try
-            {
-                List<UserModel> users = await _dbContext.Users.ToListAsync();
-
-                if (users == null) return null;
-
-                return users;
-            }
-            catch
-            {
-                return null;
-            }
+            List<UserModel> users = await _dbContext.Users.ToListAsync();
+            return users;
         }
 
         public async Task<UserModel> AddUsersAsync(UserModel user)
         {
-            try
-            {
-                await _dbContext.Users.AddAsync(user);
-                await _dbContext.SaveChangesAsync();
+            await _dbContext.Users.AddAsync(user);
+            await _dbContext.SaveChangesAsync();
 
-                return user;
-
-            }
-            catch
-            {
-                return null;
-            }
-
-
+            return user;
         }
 
         public async Task<UserModel> UpdateUserAsync(UserModel user)
         {
+            _dbContext.Entry(user).State = EntityState.Modified;
+            await _dbContext.SaveChangesAsync();
+
+            return user;
+        }
+
+        public async Task<bool> DeleteUserAsync(UserModel user)
+        {
+
             try
             {
-                _dbContext.Entry(user).State = EntityState.Modified;
+                var userModel = await _dbContext.Users.FindAsync(user.Id);
+
+                _dbContext.Users.Remove(userModel);
                 await _dbContext.SaveChangesAsync();
 
-                return user;
+                return true;
             }
             catch
             {
-                return null;
-            }
-        }
-
-        public async Task<(bool, string)> DeleteUserAsync(UserModel user)
-        {
-            try
-            {
-                var dbUser = await _dbContext.Users.FindAsync(user.Id);
-
-                if (dbUser == null)
-                {
-                    return (false, "Usuário não encontrado");
-                }
-
-                _dbContext.Users.Remove(user);
-                await _dbContext.SaveChangesAsync();
-
-                return (true, "Usuário removido com sucesso");
-            }
-            catch (Exception ex)
-            {
-                return (false, $"Erro ao remover usuário: {ex.Message}");
+                return false;
             }
         }
     }

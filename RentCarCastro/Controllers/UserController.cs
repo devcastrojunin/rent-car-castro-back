@@ -19,6 +19,7 @@ namespace src.Controllers
         public async Task<ActionResult<IEnumerable<UserModel>>> GetUsers()
         {
             var users = await _userRepository.GetAllUsersAsync();
+
             if (users == null)
             {
                 return BadRequest("Nenhum usuário encontrado.");
@@ -71,14 +72,15 @@ namespace src.Controllers
         public async Task<ActionResult> DeleteUser([FromRoute] Guid id)
         {
             var user = await _userRepository.GetUserByIdAsync(id);
-            (bool status, string message) = await _userRepository.DeleteUserAsync(user);
 
-            if (status == false)
+            var userWasRemoved = await _userRepository.DeleteUserAsync(user);
+
+            if (userWasRemoved == false)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, message);
+                return BadRequest(new { Status = false, Message = "Falha ao remover usuário" });
             }
 
-            return StatusCode(StatusCodes.Status200OK, new { Status = true, Message = message });
+            return Ok(new { Status = true, Message = "Usuário removido com sucesso." });
         }
     }
 }

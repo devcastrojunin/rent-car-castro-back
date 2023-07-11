@@ -9,6 +9,6 @@ namespace RentCarCastro.Repositories.Interfaces
         Task<UserModel> GetUserByIdAsync(Guid id);
         Task<UserModel> AddUsersAsync(UserModel user);
         Task<UserModel> UpdateUserAsync(UserModel user);
-        Task<(bool, string)> DeleteUserAsync(UserModel user);
+        Task<bool> DeleteUserAsync(UserModel user);
     }
 }
