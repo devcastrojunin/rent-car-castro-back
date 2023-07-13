@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using RentCarCastro.Data;
 using RentCarCastro.Repositories.Interfaces;
+using RentCarCastro.Services;
+using RentCarCastro.Services.Interfaces;
 using src.Repositories;
 using System.Text;
 
@@ -14,6 +16,7 @@ builder.Services.AddDbContext<ApiDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("ApiContext")));
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<ITokenService, TokenService>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {

@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using RentCarCastro.Data;
 using RentCarCastro.Models;
+using RentCarCastro.Models.DTOs;
 using RentCarCastro.Repositories.Interfaces;
 
 namespace src.Repositories

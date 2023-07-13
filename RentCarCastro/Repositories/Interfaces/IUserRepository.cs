@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RentCarCastro.Models;
+using RentCarCastro.Models.DTOs;
 
 namespace RentCarCastro.Repositories.Interfaces
 {

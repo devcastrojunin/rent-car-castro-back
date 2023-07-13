@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RentCarCastro.Models;
+using RentCarCastro.Models.DTOs;
 using RentCarCastro.Repositories.Interfaces;
 
 namespace src.Controllers
@@ -18,7 +19,7 @@ namespace src.Controllers
 
         [Authorize]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<UserModel>>> GetUsers()
+        public async Task<ActionResult<IEnumerable<UserDTO>>> GetUsers()
         {
             var users = await _userRepository.GetAllUsersAsync();
 
@@ -31,7 +32,7 @@ namespace src.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<UserModel>> GetUserById([FromRoute] int id)
+        public async Task<ActionResult<UserDTO>> GetUserById([FromRoute] int id)
         {
             var user = await _userRepository.GetUserByIdAsync(id);
             if (user == null)
@@ -43,7 +44,7 @@ namespace src.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<UserModel>> AddNewUser([FromBody] UserModel user)
+        public async Task<ActionResult<UserDTO>> AddNewUser([FromBody] UserModel user)
         {
 
             UserModel userModel = await _userRepository.AddUsersAsync(user);
@@ -57,7 +58,7 @@ namespace src.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult<UserModel>> UpdateUser([FromBody] UserModel user)
+        public async Task<ActionResult<UserDTO>> UpdateUser([FromBody] UserModel user)
         {
 
             UserModel userModel = await _userRepository.UpdateUserAsync(user);

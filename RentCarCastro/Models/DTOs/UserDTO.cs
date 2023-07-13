@@ -1,8 +1,8 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace RentCarCastro.Models
+namespace RentCarCastro.Models.DTOs
 {
-    public class UserResponse
+    public class UserDTO
     {
         public int Id { get; set; }
 
@@ -17,5 +17,6 @@ namespace RentCarCastro.Models
         public string? CNPJ { get; set; }
 
         public bool? IsActive { get; set; } = true;
+
     }
 }
