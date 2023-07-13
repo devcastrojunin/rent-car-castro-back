@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace RentCarCastro.Models
+namespace RentCarCastro.Models.DTOs
 {
-    public class UserModel
+    public class UserDTO
     {
         public int Id { get; set; }
 
@@ -12,12 +12,10 @@ namespace RentCarCastro.Models
 
         public string? Email { get; set; }
 
-        public string? Password { get; set; }
-        
         public string? CPF { get; set; }
 
         public string? CNPJ { get; set; }
-        
+
         public bool? IsActive { get; set; } = true;
 
     }

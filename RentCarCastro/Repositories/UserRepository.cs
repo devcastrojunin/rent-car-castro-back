@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using RentCarCastro.Data;
 using RentCarCastro.Models;
+using RentCarCastro.Models.DTOs;
 using RentCarCastro.Repositories.Interfaces;
 
 namespace src.Repositories
@@ -14,7 +15,7 @@ namespace src.Repositories
         {
             _dbContext = dbContext;
         }
-        public async Task<UserModel> GetUserByIdAsync(Guid id)
+        public async Task<UserModel> GetUserByIdAsync(int id)
         {
             UserModel user = await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == id);
             return user;
