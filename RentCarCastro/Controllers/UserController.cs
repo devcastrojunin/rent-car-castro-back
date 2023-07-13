@@ -38,7 +38,7 @@ namespace src.Controllers
             if (user == null)
             {
                 return BadRequest($"Usuário com id: {id} não foi encontrado.");
-            }
+            }           
 
             return Ok(user);
         }
@@ -47,7 +47,7 @@ namespace src.Controllers
         public async Task<ActionResult<UserDTO>> AddNewUser([FromBody] UserModel user)
         {
 
-            UserModel userModel = await _userRepository.AddUsersAsync(user);
+            var userModel = await _userRepository.AddUsersAsync(user);
 
             if (userModel == null)
             {
@@ -61,7 +61,7 @@ namespace src.Controllers
         public async Task<ActionResult<UserDTO>> UpdateUser([FromBody] UserModel user)
         {
 
-            UserModel userModel = await _userRepository.UpdateUserAsync(user);
+            var userModel = await _userRepository.UpdateUserAsync(user);
 
             if (userModel == null)
             {
@@ -74,9 +74,7 @@ namespace src.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteUser([FromRoute] int id)
         {
-            var user = await _userRepository.GetUserByIdAsync(id);
-
-            var userWasRemoved = await _userRepository.DeleteUserAsync(user);
+            var userWasRemoved = await _userRepository.DeleteUserAsync(id);
 
             if (userWasRemoved == false)
             {
