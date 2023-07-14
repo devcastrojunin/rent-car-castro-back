@@ -6,10 +6,10 @@ namespace RentCarCastro.Repositories.Interfaces
 {
     public interface IUserRepository
     {
-        Task<List<UserDTO>> GetAllUsersAsync();
-        Task<UserDTO> GetUserByIdAsync(int id);
-        Task<UserDTO> AddUsersAsync(UserModel user);
-        Task<UserDTO> UpdateUserAsync(UserModel user);
+        Task<List<UserModel>> GetAllUsersAsync();
+        Task<UserModel> GetUserByIdAsync(int id);
+        Task<UserModel> AddUsersAsync(UserModel user);
+        Task<UserModel> UpdateUserAsync(UserModel user);
         Task<bool> DeleteUserAsync(int id);
     }
 }

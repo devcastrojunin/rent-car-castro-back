@@ -15,89 +15,40 @@ namespace src.Repositories
         {
             _dbContext = dbContext;
         }
-        public async Task<UserDTO> GetUserByIdAsync(int id)
+        public async Task<UserModel> GetUserByIdAsync(int id)
         {
-            UserModel user = await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == id);
+            var user = await _dbContext.Users.FindAsync(id);
 
             if (user == null) return null;
 
-            var userDTO = new UserDTO
-            {
-                Id = user.Id,
-                Name = user.Name,
-                UserName = user.UserName,
-                Email = user.Email,
-                CPF = user.CPF,
-                CNPJ = user.CNPJ,
-                IsActive = user.IsActive
-            };
-
-            return userDTO;
+            return user;
         }
 
-        public async Task<List<UserDTO>> GetAllUsersAsync()
+        public async Task<List<UserModel>> GetAllUsersAsync()
         {
-            List<UserDTO> userDTO = new List<UserDTO>();
 
             List<UserModel> users = await _dbContext.Users.ToListAsync();
 
-            foreach (var item in users)
-            {
-                userDTO.Add(new UserDTO
-                
-                {
-                    Id = item.Id,
-                    Name = item.Name,
-                    UserName = item.UserName,
-                    Email = item.Email,
-                    CPF = item.CPF,
-                    CNPJ = item.CNPJ,
-                    IsActive = item.IsActive
-                });
-            }
-
-            return userDTO;
+            return users;
         }
 
-        public async Task<UserDTO> AddUsersAsync(UserModel user)
+        public async Task<UserModel> AddUsersAsync(UserModel user)
         {
             await _dbContext.Users.AddAsync(user);
             await _dbContext.SaveChangesAsync();
 
-            var userDTO = new UserDTO
-            {
-                Id = user.Id,
-                Name = user.Name,
-                UserName = user.UserName,
-                Email = user.Email,
-                CPF = user.CPF,
-                CNPJ = user.CNPJ,
-                IsActive = user.IsActive
-            };
-
-            return userDTO;
+            return user;
         }
 
-        public async Task<UserDTO> UpdateUserAsync(UserModel user)
+        public async Task<UserModel> UpdateUserAsync(UserModel user)
         {
             try
             {
-                var userModified = _dbContext.Entry(user).State = EntityState.Modified;
+                _dbContext.Entry(user).State = EntityState.Modified;
 
                 await _dbContext.SaveChangesAsync();
 
-                var userDTO = new UserDTO
-                {
-                    Id = user.Id,
-                    Name = user.Name,
-                    UserName = user.UserName,
-                    Email = user.Email,
-                    CPF = user.CPF,
-                    CNPJ = user.CNPJ,
-                    IsActive = user.IsActive
-                };
-
-                return userDTO;
+                return user;
 
             }
             catch (Exception)

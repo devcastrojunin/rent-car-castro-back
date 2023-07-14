@@ -58,6 +58,7 @@ namespace RentCarCastro.Services
                             UserName = user.UserName,
                             Email = user.Email,
                             CPF = user.CPF,
+                            CNPJ = user.CNPJ,
                             IsActive = user.IsActive
                         },
                     };

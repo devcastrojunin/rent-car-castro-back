@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using RentCarCastro.Models;
 using RentCarCastro.Models.DTOs;
 using RentCarCastro.Repositories.Interfaces;
+using RentCarCastro.Services.Interfaces;
 
 namespace src.Controllers
 {
@@ -11,17 +12,22 @@ namespace src.Controllers
     public class UserController : Controller
     {
         private readonly IUserRepository _userRepository;
+        private readonly IUserService _userService;
 
-        public UserController(IUserRepository userRepository)
+        public UserController(
+            IUserRepository userRepository,
+            IUserService userService
+        )
         {
             _userRepository = userRepository;
+            _userService = userService;
         }
 
         [Authorize]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<UserDTO>>> GetUsers()
         {
-            var users = await _userRepository.GetAllUsersAsync();
+            var users = await _userService.GetAllUsers();
 
             if (users == null)
             {
@@ -34,7 +40,8 @@ namespace src.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<UserDTO>> GetUserById([FromRoute] int id)
         {
-            var user = await _userRepository.GetUserByIdAsync(id);
+            var user = await _userService.GetUser(id);
+
             if (user == null)
             {
                 return BadRequest($"Usuário com id: {id} não foi encontrado.");
@@ -47,7 +54,7 @@ namespace src.Controllers
         public async Task<ActionResult<UserDTO>> AddNewUser([FromBody] UserModel user)
         {
 
-            var userModel = await _userRepository.AddUsersAsync(user);
+            var userModel = await _userService.AddUser(user);
 
             if (userModel == null)
             {
@@ -61,7 +68,7 @@ namespace src.Controllers
         public async Task<ActionResult<UserDTO>> UpdateUser([FromBody] UserModel user)
         {
 
-            var userModel = await _userRepository.UpdateUserAsync(user);
+            var userModel = await _userService.UpdateUser(user);
 
             if (userModel == null)
             {
@@ -74,7 +81,7 @@ namespace src.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteUser([FromRoute] int id)
         {
-            var userWasRemoved = await _userRepository.DeleteUserAsync(id);
+            var userWasRemoved = await _userService.DeleteUser(id);
 
             if (userWasRemoved == false)
             {
