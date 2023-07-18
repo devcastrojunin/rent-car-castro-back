@@ -18,5 +18,7 @@ namespace RentCarCastro.Models.DTOs
 
         public bool? IsActive { get; set; } = true;
 
+        public int RoleId { get; set; }
+
     }
 }

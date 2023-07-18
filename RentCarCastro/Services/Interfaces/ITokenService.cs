@@ -7,6 +7,6 @@ namespace RentCarCastro.Services.Interfaces
     public interface ITokenService
     {
         Task<UserModel> GetUser(string email, string password);
-        Task<TokenDTO> UserIsLogged(UserModel userData);
+        Task<TokenDTO> UserIsLogged(TokenModel userData);
     }
 }

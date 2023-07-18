@@ -1,5 +1,6 @@
 ﻿using RentCarCastro.Models;
 using RentCarCastro.Models.DTOs;
+using RentCarCastro.Responses;
 
 namespace RentCarCastro.Services.Interfaces
 {
@@ -7,7 +8,7 @@ namespace RentCarCastro.Services.Interfaces
     {
         Task<List<UserDTO>> GetAllUsers();
         Task<UserDTO> GetUser(int id);
-        Task<UserDTO> AddUser(UserModel user);
+        Task<UserResponse<UserDTO>> AddUser(UserModel user);
         Task<UserDTO> UpdateUser(UserModel user);
         Task<bool> DeleteUser(int id);
     }

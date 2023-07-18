@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace RentCarCastro.Models
 {
@@ -23,6 +24,10 @@ namespace RentCarCastro.Models
         public string? CNPJ { get; set; }
         
         public bool? IsActive { get; set; } = true;
+
+        [JsonIgnore]
+        public RoleModel? Role { get; set; }
+        public int RoleId { get; set; } = 2;
 
     }
 }

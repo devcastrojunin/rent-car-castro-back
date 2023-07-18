@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using RentCarCastro.Models;
 using RentCarCastro.Models.DTOs;
 using RentCarCastro.Repositories.Interfaces;
+using RentCarCastro.Responses;
 using RentCarCastro.Services.Interfaces;
 
 namespace src.Controllers
@@ -51,17 +52,17 @@ namespace src.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<UserDTO>> AddNewUser([FromBody] UserModel user)
+        public async Task<ActionResult<UserResponse<UserDTO>>> AddNewUser([FromBody] UserModel user)
         {
 
             var userModel = await _userService.AddUser(user);
 
-            if (userModel == null)
+            if (userModel.Data == null)
             {
-                return BadRequest("Erro ao salvar usuário");
+                return BadRequest(userModel.ErrorMessage);
             }
 
-            return Ok(user);
+            return Ok(userModel.Data);
         }
 
         [HttpPut]

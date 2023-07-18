@@ -2,6 +2,7 @@
 using RentCarCastro.Models;
 using RentCarCastro.Models.DTOs;
 using RentCarCastro.Repositories.Interfaces;
+using RentCarCastro.Responses;
 using RentCarCastro.Services.Interfaces;
 
 namespace RentCarCastro.Services
@@ -35,12 +36,30 @@ namespace RentCarCastro.Services
             return userDto;
         }
 
-        public async Task<UserDTO> AddUser(UserModel user)
+        public async Task<UserResponse<UserDTO>> AddUser(UserModel user)
         {
+            
             var usersModel = await _userRepository.AddUsersAsync(user);
-            var usersDto = _mapper.Map<UserDTO>(usersModel);
 
-            return usersDto;
+            if (usersModel.Data == null)
+            {
+                return new UserResponse<UserDTO>
+                {
+                    Data = null,
+                    ErrorMessage = usersModel.ErrorMessage
+                };
+            }
+
+            var usersDto = _mapper.Map<UserDTO>(usersModel.Data);
+
+            var userResponse = new UserResponse<UserDTO>
+            {
+                Data = usersDto,
+                ErrorMessage = usersModel.ErrorMessage
+            };
+
+            return userResponse;
+
         }
 
         public async Task<UserDTO> UpdateUser(UserModel user)

@@ -21,7 +21,7 @@ namespace RentCarCastro.Services
             _context = context;
         }
 
-        public async Task<TokenDTO> UserIsLogged(UserModel userData)
+        public async Task<TokenDTO> UserIsLogged(TokenModel userData)
         {
             var user = await GetUser(userData.Email, userData.Password);
 

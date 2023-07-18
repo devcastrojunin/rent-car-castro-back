@@ -12,44 +12,23 @@ namespace RentCarCastro.Data
         }
 
         public DbSet<UserModel> Users { get; set; }
+        public DbSet<RoleModel> Roles { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            Random rnd = new Random();
 
-            modelBuilder.Entity<UserModel>().HasData(
-                new UserModel {
-                    Id = rnd.Next(),
-                    Name = "Junior Castro",
-                    UserName = "junior.castro",
-                    Email = "teste@teste.com",
-                    Password = "admin@123",
-                    CPF = "27904525801",
-                    CNPJ = "",
-                    IsActive =  true
-                },
-                new UserModel
+            modelBuilder.Entity<RoleModel>().HasData(
+                new RoleModel
                 {
-                    Id = rnd.Next(),
-                    Name = "José da Silva",
-                    UserName = "jose.silva",
-                    Email = "teste@teste2.com",
-                    Password = "admin@123",
-                    CPF = "27904525801",
-                    CNPJ = "",
-                    IsActive = true
+                    Id = 1,
+                    Name = "admin"   
                 },
-                new UserModel
+                new RoleModel
                 {
-                    Id = rnd.Next(),
-                    Name = "Maria Cecília",
-                    UserName = "maria.cecilia",
-                    Email = "teste@teste3.com",
-                    Password = "admin@123",
-                    CPF = "27904525801",
-                    CNPJ = "",
-                    IsActive = false
+                    Id = 2,
+                    Name = "reader"
                 }
+
             );
 
             base.OnModelCreating(modelBuilder);

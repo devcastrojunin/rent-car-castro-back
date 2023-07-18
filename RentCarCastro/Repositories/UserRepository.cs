@@ -4,6 +4,7 @@ using RentCarCastro.Data;
 using RentCarCastro.Models;
 using RentCarCastro.Models.DTOs;
 using RentCarCastro.Repositories.Interfaces;
+using RentCarCastro.Responses;
 
 namespace src.Repositories
 {
@@ -24,6 +25,13 @@ namespace src.Repositories
             return user;
         }
 
+        public async Task<UserModel> GetUserByEmailAsync(UserModel user)
+        {
+            var userData = await _dbContext.Users.FirstOrDefaultAsync(u => u.Email == user.Email);
+
+            return userData;
+        }
+
         public async Task<List<UserModel>> GetAllUsersAsync()
         {
 
@@ -32,12 +40,38 @@ namespace src.Repositories
             return users;
         }
 
-        public async Task<UserModel> AddUsersAsync(UserModel user)
+        public async Task<UserResponse<UserModel>> AddUsersAsync(UserModel user)
         {
+            var hasUserRegistered = await _dbContext.Users.FirstOrDefaultAsync(u => u.Email == user.Email);
+
+            if (hasUserRegistered != null)
+            {
+                var userResponse = new UserResponse<UserModel>
+                {
+                    Data = null,
+                    ErrorMessage = "E-mail já cadastrado na base"
+                };
+
+                return userResponse;
+            }
+
             await _dbContext.Users.AddAsync(user);
             await _dbContext.SaveChangesAsync();
 
-            return user;
+            if (user == null)
+            {
+                return new UserResponse<UserModel>
+                {
+                    Data = null,
+                    ErrorMessage = "Falha ao cadastrar usuário"
+                };
+            }
+
+            return new UserResponse<UserModel>
+            {
+                Data = user,
+                ErrorMessage = null
+            };
         }
 
         public async Task<UserModel> UpdateUserAsync(UserModel user)

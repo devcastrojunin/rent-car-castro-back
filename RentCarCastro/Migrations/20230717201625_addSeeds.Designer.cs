@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RentCarCastro.Data;
 
@@ -11,9 +12,10 @@ using RentCarCastro.Data;
 namespace RentCarCastro.Migrations
 {
     [DbContext(typeof(ApiDbContext))]
-    partial class ApiDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230717201625_addSeeds")]
+    partial class addSeeds
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -97,7 +99,7 @@ namespace RentCarCastro.Migrations
             modelBuilder.Entity("RentCarCastro.Models.UserModel", b =>
                 {
                     b.HasOne("RentCarCastro.Models.RoleModel", "Role")
-                        .WithMany("User")
+                        .WithMany("Users")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -107,7 +109,7 @@ namespace RentCarCastro.Migrations
 
             modelBuilder.Entity("RentCarCastro.Models.RoleModel", b =>
                 {
-                    b.Navigation("User");
+                    b.Navigation("Users");
                 });
 #pragma warning restore 612, 618
         }

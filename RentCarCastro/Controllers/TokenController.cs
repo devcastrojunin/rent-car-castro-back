@@ -18,7 +18,7 @@ namespace RentCarCastro.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(UserModel user)
+        public async Task<IActionResult> Post(TokenModel user)
         {
             var userData = await _tokenService.UserIsLogged(user);
 
