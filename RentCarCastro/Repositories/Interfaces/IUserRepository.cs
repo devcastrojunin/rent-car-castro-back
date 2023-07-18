@@ -7,7 +7,6 @@ namespace RentCarCastro.Repositories.Interfaces
     {
         Task<List<UserModel>> GetAllUsersAsync();
         Task<UserModel> GetUserByIdAsync(int id);
-        Task<UserModel> GetUserByEmailAsync(UserModel user);
         Task<UserResponse<UserModel>> AddUsersAsync(UserModel user);
         Task<UserModel> UpdateUserAsync(UserModel user);
         Task<bool> DeleteUserAsync(int id);

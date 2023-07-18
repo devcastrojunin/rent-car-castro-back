@@ -17,6 +17,7 @@ builder.Services.AddDbContext<ApiDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("ApiContext")));
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IRoleRepository, RoleRepository>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IUserService, UserService>();
 

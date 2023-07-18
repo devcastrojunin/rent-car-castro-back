@@ -76,7 +76,7 @@ namespace src.Controllers
                 return BadRequest("Erro ao atualizar usuário");
             }
 
-            return Ok(user);
+            return Ok(userModel);
         }
 
         [HttpDelete("{id}")]

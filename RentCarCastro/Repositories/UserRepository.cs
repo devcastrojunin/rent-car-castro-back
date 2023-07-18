@@ -25,13 +25,6 @@ namespace src.Repositories
             return user;
         }
 
-        public async Task<UserModel> GetUserByEmailAsync(UserModel user)
-        {
-            var userData = await _dbContext.Users.FirstOrDefaultAsync(u => u.Email == user.Email);
-
-            return userData;
-        }
-
         public async Task<List<UserModel>> GetAllUsersAsync()
         {
 
