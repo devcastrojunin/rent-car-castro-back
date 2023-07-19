@@ -31,6 +31,21 @@ namespace RentCarCastro.Data
 
             );
 
+            modelBuilder.Entity<UserModel>().HasData(
+                new UserModel
+                {
+                    Name = "Junior Castro Admin",
+                    UserName = "junior.castro",
+                    Email = "junior.castro@teste.com",
+                    Password = "admin@123",
+                    CPF = "12345678936",
+                    CNPJ = "",
+                    IsActive = true,
+                    RoleId = 1
+                }
+
+            );
+
             base.OnModelCreating(modelBuilder);
         }
     }
