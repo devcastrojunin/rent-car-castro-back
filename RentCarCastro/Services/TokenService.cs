@@ -36,7 +36,8 @@ namespace RentCarCastro.Services
                             new Claim("UserId", user.Id.ToString()),
                             new Claim("Name", user.Name),
                             new Claim("UserName", user.UserName),
-                            new Claim("Email", user.Email)
+                            new Claim("Email", user.Email),
+                            new Claim(ClaimTypes.Role, (user.RoleId == 1) ? "Admin" : "Reader")
                         };
 
                     var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));

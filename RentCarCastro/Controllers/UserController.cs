@@ -9,6 +9,7 @@ using RentCarCastro.Services.Interfaces;
 namespace src.Controllers
 {
     [Route("api/v1/[controller]")]
+    [Authorize(Roles = "Admin")]
     [ApiController]
     public class UserController : Controller
     {
@@ -24,7 +25,6 @@ namespace src.Controllers
             _userService = userService;
         }
 
-        [Authorize]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<UserDTO>>> GetUsers()
         {

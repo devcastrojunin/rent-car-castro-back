@@ -28,8 +28,6 @@ namespace RentCarCastro.Services
             var usersModel = await _userRepository.GetAllUsersAsync();
             var rolesModel = await _roleRepository.GetAllRolesAsync();
 
-            var usersDto = _mapper.Map<List<UserDTO>>(usersModel);
-
             var userRes = new List<UserDTO>();
 
             foreach (var user in usersModel) {
