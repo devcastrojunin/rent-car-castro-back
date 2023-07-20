@@ -59,7 +59,11 @@ namespace RentCarCastro.Services
 
             var userDto = _mapper.Map<UserDTO>(usersModel);
 
+            if (role == null) return null;
+
             userDto.Role = role;
+            
+
 
             return userDto;
         }
