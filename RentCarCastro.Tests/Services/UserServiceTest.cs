@@ -3,8 +3,10 @@ using Moq;
 using RentCarCastro.Models;
 using RentCarCastro.Models.DTOs;
 using RentCarCastro.Repositories.Interfaces;
+using RentCarCastro.Responses;
 using RentCarCastro.Services;
 using RentCarCastro.Services.Interfaces;
+using System;
 
 namespace RentCarCastro.Tests.Services
 {
@@ -93,6 +95,53 @@ namespace RentCarCastro.Tests.Services
             List<UserDTO> users = await _userService.GetAllUsers();
 
             Assert.IsNotNull(users);
+        }
+
+        [TestMethod]
+        public async Task Get_User_By_Id_Whit_Return_Error()
+        {
+            _userRepositoryMock.Setup(u => u.GetUserByIdAsync(1)).ReturnsAsync((UserModel)null);
+
+            UserDTO user = await _userService.GetUser(1);
+
+            Assert.IsNull(user);
+
+        }
+
+        [TestMethod]
+        public async Task Get_User_By_Id_Whit_Return_Success()
+        {
+            UserModel user = new UserModel
+            {
+                Id = 1,
+                CNPJ = "",
+                CPF = "13467925",
+                Email = "teste@teste.com",
+                IsActive = true,
+                Name = "Test",
+                Password = "Password",
+                RoleId = 2,
+                UserName = "Test",
+                Role = new RoleModel
+                {
+                    Name = "Reader",
+                    Id = 2,
+                }
+            };
+
+            _userRepositoryMock.Setup(u => u.GetUserByIdAsync(1)).ReturnsAsync(user);
+
+
+            UserDTO userDto = await _userService.GetUser(1);
+
+            List<RoleModel> roleModel = new List<RoleModel>();
+
+            var userModelToUserDto = _mapperMock.Setup(x => x.Map<UserDTO>(user)).Returns(userDto);
+            var userRole = _roleRepositoryMock.Setup(r => r.GetAllRolesAsync()).ReturnsAsync(roleModel);
+
+
+            Assert.IsNotNull(userModelToUserDto);
+
         }
     }
 }
