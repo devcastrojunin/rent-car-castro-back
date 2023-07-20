@@ -31,9 +31,14 @@ namespace RentCarCastro.Data
 
             );
 
+
+            Random rnd = new Random();
+            int num = rnd.Next();
+
             modelBuilder.Entity<UserModel>().HasData(
                 new UserModel
                 {
+                    Id = num,
                     Name = "Junior Castro Admin",
                     UserName = "junior.castro",
                     Email = "junior.castro@teste.com",
