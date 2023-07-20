@@ -1,8 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
-using RentCarCastro.Data;
+﻿using Microsoft.IdentityModel.Tokens;
 using RentCarCastro.Models;
 using RentCarCastro.Models.DTOs;
+using RentCarCastro.Repositories.Interfaces;
 using RentCarCastro.Services.Interfaces;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -13,12 +12,12 @@ namespace RentCarCastro.Services
     public class TokenService : ITokenService
     {
         public IConfiguration _configuration;
-        private readonly ApiDbContext _context;
+        private readonly IUserRepository _userRepository;
 
-        public TokenService(IConfiguration config, ApiDbContext context)
+        public TokenService(IConfiguration config, IUserRepository userRepository)
         {
             _configuration = config;
-            _context = context;
+            _userRepository = userRepository;
         }
 
         public async Task<TokenDTO> UserIsLogged(TokenModel userData)
@@ -30,15 +29,15 @@ namespace RentCarCastro.Services
                 {
                     //create claims details based on the user information
                     var claims = new[] {
-                            new Claim(JwtRegisteredClaimNames.Sub, _configuration["Jwt:Subject"]),
-                            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                            new Claim(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString()),
-                            new Claim("UserId", user.Id.ToString()),
-                            new Claim("Name", user.Name),
-                            new Claim("UserName", user.UserName),
-                            new Claim("Email", user.Email),
-                            new Claim(ClaimTypes.Role, (user.RoleId == 1) ? "Admin" : "Reader")
-                        };
+                        new Claim(JwtRegisteredClaimNames.Sub, _configuration["Jwt:Subject"]),
+                        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                        new Claim(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString()),
+                        new Claim("UserId", user.Id.ToString()),
+                        new Claim("Name", user.Name),
+                        new Claim("UserName", user.UserName),
+                        new Claim("Email", user.Email),
+                        new Claim(ClaimTypes.Role, (user.RoleId == 1) ? "Admin" : "Reader")
+                    };
 
                     var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
                     var signIn = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -79,7 +78,7 @@ namespace RentCarCastro.Services
 
         public async Task<UserModel> GetUser(string email, string password)
         {
-            return await _context.Users.FirstOrDefaultAsync(u => u.Email == email && u.Password == password);
+            return await _userRepository.GetUserByEmailAndPassword(email, password);
         }
     }
 }

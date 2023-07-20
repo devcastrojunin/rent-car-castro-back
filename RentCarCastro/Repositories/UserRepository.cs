@@ -101,5 +101,10 @@ namespace src.Repositories
                 return false;
             }
         }
+
+        public async Task<UserModel> GetUserByEmailAndPassword(string email, string password)
+        {
+            return await _dbContext.Users.FirstOrDefaultAsync(u => u.Email == email && u.Password == password);
+        }
     }
 }
