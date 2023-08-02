@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace RentCarCastro.Models
 {
-    public class UserModel
+    public class UserModel : SetDate
     {
         public int Id { get; set; }
 
@@ -15,7 +15,7 @@ namespace RentCarCastro.Models
         [Required(ErrorMessage = "E-mail obrigatório")]
         public string? Email { get; set; }
 
-        [Required(ErrorMessage = "Senha obrigatória")]
+        [Required(ErrorMessage = "Senha obrigatória")]  
         public string? Password { get; set; }
 
         [Required(ErrorMessage = "CPF obrigatório")]
