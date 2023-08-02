@@ -12,8 +12,8 @@ using RentCarCastro.Data;
 namespace RentCarCastro.Migrations
 {
     [DbContext(typeof(ApiDbContext))]
-    [Migration("20230717201024_UsersRelationship")]
-    partial class UsersRelationship
+    [Migration("20230802124155_addInitialDate")]
+    partial class addInitialDate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -39,6 +39,18 @@ namespace RentCarCastro.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Roles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "admin"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "reader"
+                        });
                 });
 
             modelBuilder.Entity("RentCarCastro.Models.UserModel", b =>
@@ -55,6 +67,9 @@ namespace RentCarCastro.Migrations
                     b.Property<string>("CPF")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -74,6 +89,9 @@ namespace RentCarCastro.Migrations
                     b.Property<int>("RoleId")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("UserName")
                         .HasColumnType("nvarchar(max)");
 
@@ -82,12 +100,28 @@ namespace RentCarCastro.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1946200859,
+                            CNPJ = "",
+                            CPF = "12345678936",
+                            CreatedAt = new DateTime(2023, 8, 2, 9, 41, 55, 144, DateTimeKind.Local).AddTicks(4214),
+                            Email = "junior.castro@teste.com",
+                            IsActive = true,
+                            Name = "Junior Castro Admin",
+                            Password = "admin@123",
+                            RoleId = 1,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UserName = "junior.castro"
+                        });
                 });
 
             modelBuilder.Entity("RentCarCastro.Models.UserModel", b =>
                 {
                     b.HasOne("RentCarCastro.Models.RoleModel", "Role")
-                        .WithMany("Users")
+                        .WithMany("User")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -97,7 +131,7 @@ namespace RentCarCastro.Migrations
 
             modelBuilder.Entity("RentCarCastro.Models.RoleModel", b =>
                 {
-                    b.Navigation("Users");
+                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }

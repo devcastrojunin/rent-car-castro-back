@@ -66,6 +66,9 @@ namespace RentCarCastro.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -84,6 +87,9 @@ namespace RentCarCastro.Migrations
                     b.Property<int>("RoleId")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("UserName")
                         .HasColumnType("nvarchar(max)");
 
@@ -92,6 +98,22 @@ namespace RentCarCastro.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1946200859,
+                            CNPJ = "",
+                            CPF = "12345678936",
+                            CreatedAt = new DateTime(2023, 8, 2, 9, 41, 55, 144, DateTimeKind.Local).AddTicks(4214),
+                            Email = "junior.castro@teste.com",
+                            IsActive = true,
+                            Name = "Junior Castro Admin",
+                            Password = "admin@123",
+                            RoleId = 1,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UserName = "junior.castro"
+                        });
                 });
 
             modelBuilder.Entity("RentCarCastro.Models.UserModel", b =>

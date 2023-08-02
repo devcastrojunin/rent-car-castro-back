@@ -12,8 +12,8 @@ using RentCarCastro.Data;
 namespace RentCarCastro.Migrations
 {
     [DbContext(typeof(ApiDbContext))]
-    [Migration("20230717195456_RolesRelationship")]
-    partial class RolesRelationship
+    [Migration("20230802123452_initialMigration")]
+    partial class initialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -36,14 +36,21 @@ namespace RentCarCastro.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
-
                     b.ToTable("Roles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "admin"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "reader"
+                        });
                 });
 
             modelBuilder.Entity("RentCarCastro.Models.UserModel", b =>
@@ -61,6 +68,9 @@ namespace RentCarCastro.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -76,28 +86,52 @@ namespace RentCarCastro.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("UserName")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("RoleId");
+
                     b.ToTable("Users");
-                });
 
-            modelBuilder.Entity("RentCarCastro.Models.RoleModel", b =>
-                {
-                    b.HasOne("RentCarCastro.Models.UserModel", "User")
-                        .WithMany("Roles")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
+                    b.HasData(
+                        new
+                        {
+                            Id = 131730196,
+                            CNPJ = "",
+                            CPF = "12345678936",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "junior.castro@teste.com",
+                            IsActive = true,
+                            Name = "Junior Castro Admin",
+                            Password = "admin@123",
+                            RoleId = 1,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UserName = "junior.castro"
+                        });
                 });
 
             modelBuilder.Entity("RentCarCastro.Models.UserModel", b =>
                 {
-                    b.Navigation("Roles");
+                    b.HasOne("RentCarCastro.Models.RoleModel", "Role")
+                        .WithMany("User")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Role");
+                });
+
+            modelBuilder.Entity("RentCarCastro.Models.RoleModel", b =>
+                {
+                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }
