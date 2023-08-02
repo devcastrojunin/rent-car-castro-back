@@ -62,18 +62,14 @@ namespace RentCarCastro.Services
             if (role == null) return null;
 
             userDto.Role = role;
-            
-
-
             return userDto;
         }
 
         public async Task<UserResponse<UserDTO>> AddUser(UserModel user)
-        {
-            
+        {            
             var usersModel = await _userRepository.AddUsersAsync(user);
             var rolesModel = await _roleRepository.GetAllRolesAsync();
-            var role = rolesModel.Find(x => x.Id == usersModel.Data.RoleId);
+            var role = rolesModel.Find(x => x.Id == usersModel.Data?.RoleId);
 
             if (usersModel.Data == null)
             {
@@ -85,6 +81,8 @@ namespace RentCarCastro.Services
             }
 
             var userDto = _mapper.Map<UserDTO>(usersModel.Data);
+            
+            if (role == null) return null;
             userDto.Role = role;
 
             var userResponse = new UserResponse<UserDTO>
