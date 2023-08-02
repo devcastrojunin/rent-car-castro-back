@@ -135,10 +135,80 @@ namespace RentCarCastro.Tests.Services
             UserDTO userDto = await _userService.GetUser(1);
 
             List<RoleModel> roleModel = new List<RoleModel>();
-
-            var userModelToUserDto = _mapperMock.Setup(x => x.Map<UserDTO>(user)).Returns(userDto);
             var userRole = _roleRepositoryMock.Setup(r => r.GetAllRolesAsync()).ReturnsAsync(roleModel);
 
+            var userModelToUserDto = _mapperMock.Setup(x => x.Map<UserDTO>(user)).Returns(userDto);
+
+
+            Assert.IsNotNull(userModelToUserDto);
+
+        }
+
+        [TestMethod]
+        public async Task Add_New_User_Whit_Return_Error()
+        {
+            UserModel user = new UserModel();
+            UserResponse<UserModel> userData = new UserResponse<UserModel>
+            {
+                Data = null,
+                ErrorMessage = "Falha ao cadastrar usuário"
+            };
+
+            _userRepositoryMock.Setup(u => u.AddUsersAsync(user)).ReturnsAsync(userData);
+
+            UserResponse<UserDTO> userResponse = await _userService.AddUser(user);
+
+            Assert.IsNull(userResponse.Data);  
+
+        }
+
+        [TestMethod]
+        public async Task Add_New_User_Whit_Return_Success()
+        {
+            UserModel user = new UserModel
+            {
+                Id = 1,
+                CNPJ = "",
+                CPF = "13467925",
+                Email = "teste@teste.com",
+                IsActive = true,
+                Name = "Test",
+                Password = "Password",
+                RoleId = 2,
+                UserName = "Test"
+            };
+
+            UserDTO userDto = new UserDTO
+            {
+                Id = 1,
+                CNPJ = "",
+                CPF = "13467925",
+                Email = "teste@teste.com",
+                IsActive = true,
+                Name = "Test",
+                UserName = "Test",
+                Role = new RoleModel
+                {
+                    Name = "Reader",
+                    Id = 2,
+                }
+            };
+
+
+            UserResponse<UserModel> userData = new UserResponse<UserModel>
+            {
+                Data = user,
+                ErrorMessage = null
+            };
+
+            _userRepositoryMock.Setup(u => u.AddUsersAsync(user)).ReturnsAsync(userData);
+
+            UserResponse<UserDTO> userResponse = await _userService.AddUser(user);
+
+            List<RoleModel> roleModel = new List<RoleModel>();
+            _roleRepositoryMock.Setup(r => r.GetAllRolesAsync()).ReturnsAsync(roleModel);
+
+            var userModelToUserDto = _mapperMock.Setup(x => x.Map<UserResponse<UserDTO>>(user)).Returns(userResponse);
 
             Assert.IsNotNull(userModelToUserDto);
 
