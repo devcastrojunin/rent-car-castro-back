@@ -48,6 +48,8 @@ namespace src.Repositories
                 return userResponse;
             }
 
+            user.CreatedAt = DateTime.Now;
+
             await _dbContext.Users.AddAsync(user);
             await _dbContext.SaveChangesAsync();
 
@@ -71,8 +73,10 @@ namespace src.Repositories
         {
             try
             {
-                _dbContext.Entry(user).State = EntityState.Modified;
 
+                user.UpdatedAt = DateTime.Now;
+
+                _dbContext.Entry(user).State = EntityState.Modified;
                 await _dbContext.SaveChangesAsync();
 
                 return user;
