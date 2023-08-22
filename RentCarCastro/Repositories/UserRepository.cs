@@ -73,9 +73,6 @@ namespace src.Repositories
         {
             try
             {
-
-                user.UpdatedAt = DateTime.Now;
-
                 _dbContext.Entry(user).State = EntityState.Modified;
                 await _dbContext.SaveChangesAsync();
 

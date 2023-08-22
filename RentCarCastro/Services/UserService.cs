@@ -40,7 +40,9 @@ namespace RentCarCastro.Services
                     IsActive = user.IsActive,
                     Name = user.Name,
                     UserName = user.UserName,
-                    Role = rolesModel.Find(x => x.Id == user.RoleId)
+                    Role = rolesModel.Find(x => x.Id == user.RoleId),
+                    CreatedAt = user.CreatedAt,
+                    UpdateddAt = user.UpdatedAt
                 });
             }
             return userRes;
@@ -97,14 +99,24 @@ namespace RentCarCastro.Services
 
         public async Task<UserDTO> UpdateUser(UserModel user)
         {
-            var usersModel = await _userRepository.UpdateUserAsync(user);
+            user.UpdatedAt = DateTime.Now;
+
+            var userModel = await _userRepository.UpdateUserAsync(user);
             var rolesModel = await _roleRepository.GetAllRolesAsync();
 
-            var role = rolesModel.Find(x => x.Id == usersModel.RoleId);
-
-            var userDto = _mapper.Map<UserDTO>(usersModel);
-
-            userDto.Role = role;
+            var userDto = new UserDTO
+            {
+                CNPJ = userModel.CNPJ,
+                CPF = userModel.CPF,
+                Email = userModel.Email,
+                Id = userModel.Id,
+                IsActive = userModel.IsActive,
+                Name = userModel.Name,
+                UserName = userModel.UserName,
+                Role = rolesModel.Find(x => x.Id == user.RoleId),
+                CreatedAt = userModel.CreatedAt,
+                UpdateddAt = userModel.UpdatedAt
+            };
 
             return userDto;
         }
