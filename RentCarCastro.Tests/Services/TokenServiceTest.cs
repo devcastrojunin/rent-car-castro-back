@@ -11,12 +11,12 @@ namespace RentCarCastro.Tests.Services
     [TestClass]
     public class TokenServiceTest
     {
-        private IUserService _userService;
-        private ITokenService _tokenService;
-        private IConfiguration _configuration;
-        private Mock<IUserRepository> _userRepositoryMock;
-        private Mock<IRoleRepository> _roleRepositoryMock;
-        private Mock<IMapper> _mapperMock;
+        private IUserService? _userService;
+        private ITokenService? _tokenService;
+        private IConfiguration? _configuration;
+        private Mock<IUserRepository>? _userRepositoryMock;
+        private Mock<IRoleRepository>? _roleRepositoryMock;
+        private Mock<IMapper>? _mapperMock;
 
         [TestInitialize]
         public void Initialize()
