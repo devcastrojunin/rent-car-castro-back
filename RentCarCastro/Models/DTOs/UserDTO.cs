@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace RentCarCastro.Models.DTOs
 {
-    public class UserDTO : SetDate
+    public class UserDTO
     {
         public int Id { get; set; }
 
@@ -21,7 +21,11 @@ namespace RentCarCastro.Models.DTOs
 
         public RoleNameEnum RoleName { get; set; } = RoleNameEnum.READER;        
 
-        public RoleModel Role { get; set; }
+        public RoleModel? Role { get; set; }
+
+        public DateTime CreatedAt { get; set; }
+
+        public DateTime UpdateddAt { get; set; }
 
     }
 }

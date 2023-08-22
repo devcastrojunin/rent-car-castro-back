@@ -69,7 +69,7 @@ namespace src.Repositories
             };
         }
 
-        public async Task<UserModel> UpdateUserAsync(UserModel user)
+        public async Task<UserModel?> UpdateUserAsync(UserModel user)
         {
             try
             {
@@ -106,7 +106,7 @@ namespace src.Repositories
             }
         }
 
-        public async Task<UserModel> GetUserByEmailAndPassword(string email, string password)
+        public async Task<UserModel?> GetUserByEmailAndPassword(string email, string password)
         {
             return await _dbContext.Users.FirstOrDefaultAsync(u => u.Email == email && u.Password == password);
         }

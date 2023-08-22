@@ -4,7 +4,7 @@ namespace RentCarCastro.Models.DTOs
 {
     public class TokenDTO
     {
-        public UserDTO user { get; set; }
-        public JwtSecurityToken token { get; set; }
+        public UserDTO? user { get; set; }
+        public JwtSecurityToken? token { get; set; }
     }
 }
