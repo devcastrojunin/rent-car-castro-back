@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RentCarCastro\RentCarCastro.csproj" />
+    <ProjectReference Include="..\RentCarCastro\RentCarCastro.Api.csproj" />
   </ItemGroup>
 
 </Project>

@@ -9,7 +9,7 @@ using RentCarCastro.Services.Interfaces;
 namespace src.Controllers
 {
     [Route("api/v1/[controller]")]
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     [ApiController]
     public class UserController : Controller
     {

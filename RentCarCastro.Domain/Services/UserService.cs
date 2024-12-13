@@ -51,13 +51,9 @@ namespace RentCarCastro.Services
         public async Task<UserDTO> GetUser(int id)
         {
             var usersModel = await _userRepository.GetUserByIdAsync(id);
-
-            if (usersModel == null)
-                return null;
-
             var rolesModel = await _roleRepository.GetAllRolesAsync();
 
-            var role = rolesModel.Find(x => x.Id == usersModel.RoleId);
+            var role = rolesModel?.Find(x => x.Id == usersModel.RoleId);
 
             var userDto = _mapper.Map<UserDTO>(usersModel);
 
@@ -125,7 +121,7 @@ namespace RentCarCastro.Services
         {
             var user = await _userRepository.DeleteUserAsync(id);
 
-            return user ? true : false;
+            return user;
         }        
     }
 }
